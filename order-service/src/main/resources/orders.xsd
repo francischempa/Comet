@@ -1,0 +1,34 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://com.comet/make-order-request"
+           targetNamespace="http://com.comet/make-order-request"
+           elementFormDefault="qualified">
+
+    <xs:element name="getOrderRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:string"/>
+                <xs:element name="product" type="xs:string"/>
+                <xs:element name="quantity" type="xs:string"/>
+                <xs:element name="price" type="xs:string"/>
+                <xs:element name="side" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getOrderResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="order" type="tns:order"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="order">
+        <xs:sequence>
+            <xs:element name="id" type="xs:string"/>
+            <xs:element name="product" type="xs:string"/>
+            <xs:element name="quantity" type="xs:string"/>
+            <xs:element name="price" type="xs:string"/>
+            <xs:element name="side" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
