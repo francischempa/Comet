@@ -8,13 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
-public class
-
-
-
-
-
-UtilsComet {
+public class UtilsComet {
     public static ExchConnectivity service = new ExchConnectivity("exch1");
     public static int numberOfTaskQueues = 4;
     public static String redisAddress = "localhost";

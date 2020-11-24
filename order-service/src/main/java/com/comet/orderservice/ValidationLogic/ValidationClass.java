@@ -14,7 +14,7 @@ public class ValidationClass implements Validated{
             if(Integer.parseInt(request.getQuantity()) <= 0 || Integer.parseInt(request.getQuantity()) > marketData.getBUY_LIMIT() ){
                 System.out.println("There's a problem with your quantity!");
                 return false;
-            }else if( difference > thresholdPrice || difference <= 0){
+            }else if( difference >= thresholdPrice || difference <= 0){
                 System.out.println("Consider reducing your waging Bid price or check your waging price");
                 return false;
             }
@@ -22,7 +22,7 @@ public class ValidationClass implements Validated{
             if(Integer.parseInt(request.getQuantity()) <= 0 || Integer.parseInt(request.getQuantity()) > marketData.getSELL_LIMIT() ){
                 System.out.println("There's a problem with your quantity!");
                 return false;
-            }else if( difference > thresholdPrice || difference <= 0){
+            }else if( difference >= thresholdPrice || difference <= 0){
                 System.out.println("Consider reducing your waging Ask price or check your waging price");
                 return false;
             }
