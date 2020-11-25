@@ -55,6 +55,8 @@ public class OrdersEndpoint {
             jedis.lpush("queue:ov:te:makeorder", request.getId());
             System.out.println("We validated order ");
             jedis.publish("ordervalidator-validation-success", "Order Validated"+ orders);
+        }else {
+            jedis.publish("ordervalidator-validation-failed", "Order Validation Failed" + orders);
         }
         return response;
 
