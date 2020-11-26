@@ -33,7 +33,10 @@ public class MakeOrderQueue implements Runnable {
                 continue;
             }
             Order order =   new Order(exchangeOrder.getId(),exchangeOrder.getProduct(),exchangeOrder.getQuantity(),exchangeOrder.getPrice(),exchangeOrder.getSide());
-            String orderId = UtilsComet.exchangeWebClient.post().uri(order.generateUri().toLowerCase()).body(Mono.just(order),Order.class).retrieve().bodyToMono(String.class).block();
+            String orderId = "";
+            try {
+                orderId = UtilsComet.exchangeWebClient.post().uri(order.generateUri().toLowerCase()).body(Mono.just(order), Order.class).retrieve().bodyToMono(String.class).block();
+            } catch (Exception ignore) { }
             orderId = UtilsComet.convertToObject(orderId,String.class);
             if(isSuccess(orderId)){
 //                SAVE TRANSACTION

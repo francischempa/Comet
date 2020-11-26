@@ -29,8 +29,9 @@ public class Subscriber implements Runnable {
 //
 ////                done
                 if (("marketdata:"+UtilsComet.service.getId()).equals(channel)) {
+                    final Jedis publisherjedis = new Jedis(UtilsComet.redisAddress);
+                    UtilsComet.setCacheValue("md",message,publisherjedis);
                     Arrays.stream(marketDataList).forEach(marketData -> {
-                        Jedis publisherjedis = new Jedis(UtilsComet.redisAddress);
                         UtilsComet.setCacheValue("md:" + marketData.getTICKER(), UtilsComet.convertToString(marketData), publisherjedis);
                         publisherjedis.close();
                     });
