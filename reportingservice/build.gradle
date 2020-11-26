@@ -14,6 +14,7 @@ repositories {
 
 dependencies {
 	implementation 'redis.clients:jedis'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.0'
 	compile group: 'com.corundumstudio.socketio', name: 'netty-socketio', version: '1.7.18'
 	testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '2.0.0-alpha1'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
