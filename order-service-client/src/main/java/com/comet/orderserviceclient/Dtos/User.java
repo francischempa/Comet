@@ -1,5 +1,6 @@
 package com.comet.orderserviceclient.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -24,13 +25,12 @@ public class User {
     @NotNull
     private LocalDateTime created;
 
-
-    @OneToMany(targetEntity = Portfolio.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "u_id_FK", referencedColumnName = "user_id")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Portfolio> portfolios;
 
-    @OneToMany(targetEntity = Order.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "userid_FK", referencedColumnName = "user_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Order> orders;
 
 
@@ -89,6 +89,22 @@ public class User {
         this.created = created;
     }
 
+    public List<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
+    public void setPortfolios(List<Portfolio> portfolios) {
+        this.portfolios = portfolios;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -97,6 +113,9 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", balance=" + balance +
+                ", created=" + created +
+                ", portfolios=" + portfolios +
+                ", orders=" + orders +
                 '}';
     }
 }

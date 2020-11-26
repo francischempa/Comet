@@ -6,6 +6,7 @@ import com.comet.orderserviceclient.client.OrderClient;
 import com.comet.orderserviceclient.soap.bindings.GetOrderRequest;
 import com.comet.orderserviceclient.soap.bindings.GetOrderResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping("/order")
+    @CrossOrigin
+    @PostMapping(path = "/order")
     public GetOrderResponse showDetails (@RequestBody GetOrderRequest getOrderRequest){
         return orderClient.showRequestDetails(getOrderRequest);
     }

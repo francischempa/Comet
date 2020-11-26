@@ -18,7 +18,7 @@ public class OrderService {
         orderDao.deleteById(id);
     }
 
-    public List<Order> addNewOrders(Order order){
-        return (List<Order>) orderDao.save(order);
+    public Order addNewOrders(Order order){
+        return  orderDao.save(order);
     }
 }
