@@ -1,5 +1,6 @@
 package com.comet.orderserviceclient.Dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.ManyToAny;
 
@@ -14,25 +15,21 @@ public class Portfolio {
     private Long port_id;
     @NotNull
     private String name;
-    @NotNull
-    private Long u_id_FK;
 
-    @OneToMany(targetEntity = PortoflioContent.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "port_id_FK", referencedColumnName = "port_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "portfolio")
     private List<PortoflioContent> portfolioContent;
 
-
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Portfolio() {
     }
 
-    public Portfolio(String name, Long u_id_FK) {
+    public Portfolio(String name, User user) {
         this.name = name;
-        this.u_id_FK = u_id_FK;
-    }
-
-    public Long getPort_id() {
-        return port_id;
+        this.user = user;
     }
 
     public String getName() {
@@ -43,12 +40,21 @@ public class Portfolio {
         this.name = name;
     }
 
-    public Long getU_id_FK() {
-        return u_id_FK;
+    public List<PortoflioContent> getPortfolioContent() {
+        return portfolioContent;
     }
 
-    public void setU_id_FK(Long u_id_FK) {
-        this.u_id_FK = u_id_FK;
+    public void setPortfolioContent(List<PortoflioContent> portfolioContent) {
+        this.portfolioContent = portfolioContent;
+    }
+
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -56,7 +62,8 @@ public class Portfolio {
         return "Portfolio{" +
                 "port_id=" + port_id +
                 ", name='" + name + '\'' +
-                ", u_id_FK=" + u_id_FK +
+                ", portfolioContent=" + portfolioContent +
+                ", user=" + user +
                 '}';
     }
 }

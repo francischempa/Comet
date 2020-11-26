@@ -3,16 +3,15 @@ package com.comet.orderserviceclient.Dtos;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_id;
-    @NotNull
-    private int product_id;
     @NotNull
     private String side;
     @NotNull
@@ -20,26 +19,39 @@ public class Order {
     @NotNull
     private int quantity;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    private List<StockTransactions> stockTransactions;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @NotNull
+    private LocalDateTime placedOn;
+
     public Order() {
     }
 
-    public Order(int product_id, String side, double order_price, int quantity) {
-        this.product_id = product_id;
+    public Order(String side, double order_price, int quantity) {
         this.side = side;
         this.order_price = order_price;
         this.quantity = quantity;
+        this.placedOn = LocalDateTime.now();
     }
 
-    public Long getOrder_id() {
-        return order_id;
-    }
 
-    public int getProduct_id_FK() {
-        return product_id;
-    }
-
-    public void setProduct_id_FK(int product_id_FK) {
-        this.product_id = product_id_FK;
+    public Order(String side, double order_price, int quantity, User user, List<StockTransactions> stockTransactions, Product product) {
+        this.side = side;
+        this.order_price = order_price;
+        this.quantity = quantity;
+        this.user = user;
+        this.stockTransactions = stockTransactions;
+        this.product = product;
+        this.placedOn = LocalDateTime.now();
     }
 
     public String getSide() {
@@ -66,14 +78,40 @@ public class Order {
         this.quantity = quantity;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<StockTransactions> getStockTransactions() {
+        return stockTransactions;
+    }
+
+    public void setStockTransactions(List<StockTransactions> stockTransactions) {
+        this.stockTransactions = stockTransactions;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "order_id=" + order_id +
-                ", product_id=" + product_id +
                 ", side='" + side + '\'' +
                 ", order_price=" + order_price +
                 ", quantity=" + quantity +
+                ", user=" + user +
+                ", stockTransactions=" + stockTransactions +
+                ", product=" + product +
                 '}';
     }
 }

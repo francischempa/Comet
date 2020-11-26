@@ -10,6 +10,6 @@ import java.util.Set;
 
 public interface PortfolioDao extends JpaRepository<Portfolio,Long> {
 
-    @Query("SELECT name FROM Portfolio WHERE u_id_FK = :user_id")
+    @Query("SELECT name FROM Portfolio WHERE user = :user_id")
     List<Portfolio> getAllUserPortfolio(@Param("user_id") Long id);
 }

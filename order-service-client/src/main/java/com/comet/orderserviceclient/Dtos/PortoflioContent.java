@@ -7,32 +7,29 @@ import javax.persistence.*;
 @Entity
 public class PortoflioContent {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long portfolio_content_id;
     private int quantity;
-    private int port_id_FK;
-    private Long product_id_FK;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "port_id")
+    private Portfolio portfolio;
 
     public PortoflioContent() {
     }
 
-    @ManyToOne(targetEntity = Product.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    private Product product;
-
-    public PortoflioContent(Long portfolio_content_id, int quantity, int port_id_FK, Long product_id_FK) {
-        this.portfolio_content_id = portfolio_content_id;
+    public PortoflioContent(int quantity, Product product, Portfolio portfolio) {
         this.quantity = quantity;
-        this.port_id_FK = port_id_FK;
-        this.product_id_FK = product_id_FK;
+        this.product = product;
+        this.portfolio = portfolio;
     }
 
     public Long getPortfolio_content_id() {
         return portfolio_content_id;
-    }
-
-    public void setPortfolio_content_id(Long portfolio_content_id) {
-        this.portfolio_content_id = portfolio_content_id;
     }
 
     public int getQuantity() {
@@ -43,20 +40,20 @@ public class PortoflioContent {
         this.quantity = quantity;
     }
 
-    public int getPort_id_FK() {
-        return port_id_FK;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setPort_id_FK(int port_id_FK) {
-        this.port_id_FK = port_id_FK;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public Long getProduct_id_FK() {
-        return product_id_FK;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setProduct_id_FK(Long product_id_FK) {
-        this.product_id_FK = product_id_FK;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     @Override
@@ -64,8 +61,8 @@ public class PortoflioContent {
         return "PortoflioContent{" +
                 "portfolio_content_id=" + portfolio_content_id +
                 ", quantity=" + quantity +
-                ", port_id_FK=" + port_id_FK +
-                ", product_id_FK=" + product_id_FK +
+                ", product=" + product +
+                ", portfolio=" + portfolio +
                 '}';
     }
 }

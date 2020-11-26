@@ -8,20 +8,28 @@ import java.util.List;
 @Entity
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
     @NotNull
     private String product_name;
 
-    @OneToMany(targetEntity = Order.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    private List<Order> orders;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+    private List<Order> order;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
+    private List<PortoflioContent> portoflioContents;
 
     public Product() {
     }
 
     public Product(String product_name) {
         this.product_name = product_name;
+    }
+
+    public Product(String product_name, List<Order> order, List<PortoflioContent> portoflioContents) {
+        this.product_name = product_name;
+        this.order = order;
+        this.portoflioContents = portoflioContents;
     }
 
     public Long getProduct_id() {
@@ -34,6 +42,22 @@ public class Product {
 
     public void setProduct_name(String product_name) {
         this.product_name = product_name;
+    }
+
+    public List<Order> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Order> order) {
+        this.order = order;
+    }
+
+    public List<PortoflioContent> getPortoflioContents() {
+        return portoflioContents;
+    }
+
+    public void setPortoflioContents(List<PortoflioContent> portoflioContents) {
+        this.portoflioContents = portoflioContents;
     }
 
     @Override

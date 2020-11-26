@@ -4,12 +4,13 @@ import com.sun.istack.NotNull;
 
 import javax.annotation.processing.Generated;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class StockTransactions {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transaction_id;
     @NotNull
     private double stock_price;
@@ -19,12 +20,15 @@ public class StockTransactions {
     private String order_key;
     private String transaction_status;
 
-    @ManyToOne(targetEntity = Exchange.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "exchange_id", referencedColumnName = "exchange_id")
+    @NotNull
+    private LocalDateTime dateTime;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exchange_id")
     private Exchange exchange;
 
-    @ManyToOne(targetEntity = Order.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id_fk", referencedColumnName = "order_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     public StockTransactions() {
@@ -35,6 +39,7 @@ public class StockTransactions {
         this.stock_quantity = stock_quantity;
         this.order_key = order_key;
         this.transaction_status = transaction_status;
+        this.dateTime = LocalDateTime.now();
     }
 
     public Long getTransaction_id() {
@@ -73,6 +78,21 @@ public class StockTransactions {
         this.transaction_status = transaction_status;
     }
 
+    public Exchange getExchange() {
+        return exchange;
+    }
+
+    public void setExchange(Exchange exchange) {
+        this.exchange = exchange;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     @Override
     public String toString() {

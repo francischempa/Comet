@@ -3,6 +3,7 @@ package com.comet.orderservice.Dto;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,8 @@ public class Order {
     private Double order_price;
     @NotNull
     private Integer quantity;
+    @NotNull
+    private LocalDateTime placedOn;
 
     @NotNull
     @Column(name = "product_id")
@@ -35,6 +38,7 @@ public class Order {
         this.quantity = quantity;
         this.productId = productId;
         this.userId = userId;
+        this.placedOn = LocalDateTime.now();
     }
 
     public Long getOrder_id() {

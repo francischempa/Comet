@@ -27,6 +27,8 @@ public class UserService {
         return userDao.findAll();
     }
 
+    public Optional<User> getUserById(Long id){return userDao.findById(id);}
+
     public User updateUser(User user){
         return null;
 //        userDao.findById(user.getUser_id());

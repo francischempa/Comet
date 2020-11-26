@@ -2,6 +2,7 @@ package com.comet.orderserviceclient.Services;
 
 import com.comet.orderserviceclient.Daos.PortfolioDao;
 import com.comet.orderserviceclient.Dtos.Portfolio;
+import com.comet.orderserviceclient.Dtos.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

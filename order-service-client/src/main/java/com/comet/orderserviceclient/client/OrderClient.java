@@ -18,6 +18,6 @@ public class OrderClient {
 
     public GetOrderResponse showRequestDetails(GetOrderRequest request){
         webServiceTemplate = new WebServiceTemplate(jaxb2Marshaller);
-        return (GetOrderResponse) webServiceTemplate.marshalSendAndReceive("http://192.168.128.54:8080/ws",request);
+        return (GetOrderResponse) webServiceTemplate.marshalSendAndReceive("http://localhost:8080/ws",request);
     }
 }
