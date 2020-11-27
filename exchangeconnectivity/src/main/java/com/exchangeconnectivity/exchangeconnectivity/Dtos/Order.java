@@ -1,6 +1,5 @@
-package com.reportingservice.reportingservice.Dtos;
+package com.exchangeconnectivity.exchangeconnectivity.Dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -20,7 +19,6 @@ public class Order {
     @NotNull
     private int quantity;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

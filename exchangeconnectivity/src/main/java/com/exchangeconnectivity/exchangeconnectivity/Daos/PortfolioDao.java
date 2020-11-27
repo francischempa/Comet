@@ -1,6 +1,6 @@
-package com.reportingservice.reportingservice.Daos;
+package com.exchangeconnectivity.exchangeconnectivity.Daos;
 
-import com.reportingservice.reportingservice.Dtos.Portfolio;
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.Portfolio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

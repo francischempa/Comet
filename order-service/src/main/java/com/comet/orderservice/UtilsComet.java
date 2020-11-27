@@ -1,16 +1,11 @@
-package com.reportingservice.reportingservice;
+package com.comet.orderservice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPubSub;
 
 public class UtilsComet {
-
-
-
     public static  <T> T  convertToObject(String data, Class<T> type){
         ObjectMapper objectMapper = new ObjectMapper();
         T t = null;

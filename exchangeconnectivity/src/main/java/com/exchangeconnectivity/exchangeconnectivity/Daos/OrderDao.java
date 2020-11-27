@@ -1,6 +1,6 @@
-package com.reportingservice.reportingservice.Daos;
+package com.exchangeconnectivity.exchangeconnectivity.Daos;
 
-import com.reportingservice.reportingservice.Dtos.Order;
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderDao extends JpaRepository<Order,Long> {

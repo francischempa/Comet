@@ -19,6 +19,7 @@ public class ReportingserviceApplication {
 		SpringApplication.run(ReportingserviceApplication.class, args);
 		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 		ctx.register(ReportingServiceConfig.class);
+
 		ctx.refresh();
 		SocketIOServer server = ctx.getBean(SocketIOServer.class);
 		server.addDisconnectListener(new DisconnectListener() {
