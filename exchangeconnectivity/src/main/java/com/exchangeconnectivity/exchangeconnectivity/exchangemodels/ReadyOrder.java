@@ -4,14 +4,14 @@ import com.exchangeconnectivity.exchangeconnectivity.UtilsComet;
 
 import java.io.Serializable;
 
-public class Order implements Serializable,Blockable {
+public class ReadyOrder implements Serializable,Blockable {
     private String id;
     private String product;
     private int quantity;
     private double price;
     private String side;
 
-    public Order(String id, String product, int quantity, double price, String side) {
+    public ReadyOrder(String id, String product, int quantity, double price, String side) {
         this.id = id;
         this.product = product;
         this.quantity = quantity;
@@ -19,7 +19,7 @@ public class Order implements Serializable,Blockable {
         this.side = side;
     }
 
-    public Order() {
+    public ReadyOrder() {
     }
 
     public String getId() {

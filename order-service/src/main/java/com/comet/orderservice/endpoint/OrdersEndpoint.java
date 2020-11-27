@@ -5,6 +5,7 @@ import com.comet.orderservice.Dao.UserDao;
 import com.comet.orderservice.Dto.Order;
 import com.comet.orderservice.Dto.User;
 import com.comet.orderservice.Services.OrderService;
+import com.comet.orderservice.UtilsComet;
 import com.comet.orderservice.ValidationLogic.*;
 import com.comet.orderservice.marketdata.MarketData;
 import com.comet.orderservice.responseobjects.OrderDetails;
@@ -79,14 +80,14 @@ public class OrdersEndpoint {
                     Integer.parseInt(request.getQuantity()),
                     productDao.getProductByProductName(request.getProduct()).get().getProduct_id(),
                     usrId);
-            orderService.addNewOrders(order);
+            order = orderService.addNewOrders(order);
 
             jedis.set(request.getId(), requestStr);
             jedis.lpush("queue:ov:te:makeorder", request.getId());
             System.out.println("We validated order ");
-            jedis.publish("ordervalidator-validation-success", "Order Validated"+ orders);
+            jedis.publish("ordervalidator-validation-success", UtilsComet.convertToString(order));
         }else {
-            jedis.publish("ordervalidator-validation-failed", "Order Validation Failed" + orders);
+            jedis.publish("ordervalidator-validation-failed",orders );
         }
         return response;
     }

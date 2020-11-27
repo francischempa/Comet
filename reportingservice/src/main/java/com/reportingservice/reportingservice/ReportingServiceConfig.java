@@ -2,6 +2,7 @@ package com.reportingservice.reportingservice;
 
 import com.corundumstudio.socketio.SocketConfig;
 import com.corundumstudio.socketio.SocketIOServer;
+import com.reportingservice.reportingservice.Daos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
@@ -11,6 +12,8 @@ import redis.clients.jedis.Jedis;
 
 @org.springframework.context.annotation.Configuration
 public class ReportingServiceConfig {
+
+
 
     @Autowired
     SocketIOServer server;
@@ -32,6 +35,5 @@ public class ReportingServiceConfig {
         socketConfig.setReuseAddress(true);
         return new SocketIOServer(configuration);
     }
-
 
 }

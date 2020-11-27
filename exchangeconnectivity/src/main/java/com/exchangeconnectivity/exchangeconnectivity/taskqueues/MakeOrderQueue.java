@@ -1,8 +1,12 @@
 package com.exchangeconnectivity.exchangeconnectivity.taskqueues;
 
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.Exchange;
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.Order;
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.StockTransactions;
+import com.exchangeconnectivity.exchangeconnectivity.MyDao;
 import com.exchangeconnectivity.exchangeconnectivity.UtilsComet;
 import com.exchangeconnectivity.exchangeconnectivity.exchangemodels.ExchangeOrder;
-import com.exchangeconnectivity.exchangeconnectivity.exchangemodels.Order;
+import com.exchangeconnectivity.exchangeconnectivity.exchangemodels.ReadyOrder;
 import com.exchangeconnectivity.exchangeconnectivity.responseobjects.ExchangeTransaction;
 import com.exchangeconnectivity.exchangeconnectivity.tasks.MonitorRequest;
 import reactor.core.publisher.Mono;
@@ -32,12 +36,23 @@ public class MakeOrderQueue implements Runnable {
                 System.out.println("Clean up done!");
                 continue;
             }
-            Order order =   new Order(exchangeOrder.getId(),exchangeOrder.getProduct(),exchangeOrder.getQuantity(),exchangeOrder.getPrice(),exchangeOrder.getSide());
-            String orderId = UtilsComet.exchangeWebClient.post().uri(order.generateUri().toLowerCase()).body(Mono.just(order),Order.class).retrieve().bodyToMono(String.class).block();
+            ReadyOrder readyOrder =   new ReadyOrder(exchangeOrder.getId(),exchangeOrder.getProduct(),exchangeOrder.getQuantity(),exchangeOrder.getPrice(),exchangeOrder.getSide());
+            String orderId = UtilsComet.exchangeWebClient.post().uri(readyOrder.generateUri().toLowerCase()).body(Mono.just(readyOrder), ReadyOrder.class).retrieve().bodyToMono(String.class).block();
             orderId = UtilsComet.convertToObject(orderId,String.class);
+//                (double stock_price, int stock_quantity, String order_key, String transaction_status, Exchange exchange, com.exchangeconnectivity.exchangeconnectivity.Dtos.Order order)
+            Exchange exchange = new Exchange();
+            if(exchangeOrder.getExchange()=="exch1"){
+                exchange = MyDao.exchangeDao.findById(1L).get();
+            }else{
+                exchange = MyDao.exchangeDao.findById(2L).get();
+            }
+
+            Order order = MyDao.orderDao.findById(exchange.getId()).get();
+            StockTransactions stockTransactions = new StockTransactions(exchangeOrder.getPrice(),
+                    exchangeOrder.getQuantity(),"","",exchange,order);
+            stockTransactions = MyDao.stockTransactionsDao.save(stockTransactions);
+            Long transaction_id = stockTransactions.getTransaction_id();
             if(isSuccess(orderId)){
-//                SAVE TRANSACTION
-                Long transaction_id = 1L;
                 ExchangeTransaction exchangeTransaction = new ExchangeTransaction(transaction_id,Long.parseLong(exchangeOrder.getId()),UtilsComet.service.getId(),orderId,exchangeOrder.getPrice(),exchangeOrder.getQuantity(),"placed successfully");
 
                 UtilsComet.addToQueue(taskKey+":id",orderId,jedis);
@@ -49,7 +64,7 @@ public class MakeOrderQueue implements Runnable {
 
             }else{
                 System.out.println("Order Failed");
-                ExchangeTransaction exchangeTransaction = new ExchangeTransaction(0L,Long.parseLong(exchangeOrder.getId()),UtilsComet.service.getId(),"",exchangeOrder.getPrice(),exchangeOrder.getQuantity(),"Failed");
+                ExchangeTransaction exchangeTransaction = new ExchangeTransaction(transaction_id,Long.parseLong(exchangeOrder.getId()),UtilsComet.service.getId(),"",exchangeOrder.getPrice(),exchangeOrder.getQuantity(),"Failed");
                 UtilsComet.publish(UtilsComet.service.getId()+"-order-failed",exchangeTransaction,jedis);
             }
 

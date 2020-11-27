@@ -1,4 +1,4 @@
-package com.reportingservice.reportingservice.Dtos;
+package com.exchangeconnectivity.exchangeconnectivity.Dtos;
 
 import com.sun.istack.NotNull;
 
@@ -35,6 +35,10 @@ public class StockTransactions {
     public StockTransactions() {
     }
 
+    public Long getTransaction_id() {
+        return transaction_id;
+    }
+
     public StockTransactions(double stock_price, int stock_quantity, String order_key, String transaction_status, Exchange exchange, Order order) {
         this.stock_price = stock_price;
         this.stock_quantity = stock_quantity;
@@ -59,10 +63,6 @@ public class StockTransactions {
 
     public void setCumulatedquantity(Integer cumulatedquantity) {
         this.cumulatedquantity = cumulatedquantity;
-    }
-
-    public Long getTransaction_id() {
-        return transaction_id;
     }
 
     public double getStock_price() {

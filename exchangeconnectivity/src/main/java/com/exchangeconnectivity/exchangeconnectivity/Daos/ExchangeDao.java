@@ -1,6 +1,6 @@
-package com.reportingservice.reportingservice.Daos;
+package com.exchangeconnectivity.exchangeconnectivity.Daos;
 
-import com.reportingservice.reportingservice.Dtos.Exchange;
+import com.exchangeconnectivity.exchangeconnectivity.Dtos.Exchange;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExchangeDao extends JpaRepository<Exchange,Long> {

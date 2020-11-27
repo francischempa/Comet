@@ -18,9 +18,9 @@ public class MakeOrderQueue implements Runnable {
 
     @Override
     public void run() {
-        String data = "{\"id\":\"102\",\"product\":\"AAPL\",\"quantity\":1,\"price\":2,\"side\":\"SELL\"}";
-        UtilsComet.setCacheValue("102",data,jedis);
-        UtilsComet.addToQueue(Config.getMakeOrderQueueFromOvToTe(),"102",jedis);
+//        String data = "{\"id\":\"102\",\"product\":\"AAPL\",\"quantity\":1,\"price\":2,\"side\":\"SELL\"}";
+//        UtilsComet.setCacheValue("102",data,jedis);
+//        UtilsComet.addToQueue(Config.getMakeOrderQueueFromOvToTe(),"102",jedis);
 
 //        data = "{\"id\":\"order2\",\"product\":\"IBM\",\"quantity\":100,\"price\":1.5,\"side\":\"SELL\"}";
 //        UtilsComet.setCacheValue("order2",data);
